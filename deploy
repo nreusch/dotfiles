@@ -97,5 +97,19 @@ printf "source '$HOME/dotfiles/zsh/zshrc_manager.sh'" > ~/.zshrc
 printf "so $HOME/dotfiles/vim/vimrc.vim" > ~/.vimrc
 printf "source-file $HOME/dotfiles/tmux/tmux.conf" > ~/.tmux.conf
 
+
+echo "Would you like to set your default git credentials? (y/n)"
+old_stty_cfg=$(stty -g)
+stty raw -echo
+answer=$( while ! head -c 1 | grep -i '[ny]' ;do true ;done )
+stty $old_stty_cfg
+if echo "$answer" | grep -iq "^y" ;then
+	git config --global user.name "Niklas Reusch"
+	git config --global user.email nreusch@web.de
+	echo "Succesfully set default git credentials."
+else
+	echo "Not setting any credentials."
+fi
+
 echo
 echo "Please log out and log back in for default shell to be initialized."
