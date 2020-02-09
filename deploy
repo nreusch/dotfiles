@@ -96,7 +96,7 @@ fi
 printf "source '$HOME/dotfiles/zsh/zshrc_manager.sh'" > ~/.zshrc
 printf "so $HOME/dotfiles/vim/vimrc.vim" > ~/.vimrc
 printf "source-file $HOME/dotfiles/tmux/tmux.conf" > ~/.tmux.conf
-printf "source '$HOME/dotfiles/xmodmap/.xmodmap'" > ~/.xmodmap
+sudo cat $HOME/dotfiles/xmodmap/.xmodmap > ~/.xmodmap
 
 echo "Would you like to set your default git credentials? (y/n)"
 old_stty_cfg=$(stty -g)
