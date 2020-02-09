@@ -10,6 +10,8 @@
 	alias v="vim -p"
 	mkdir -p /tmp/log
 	
+	alias mkdi="mkdir "
+
 	alias codium="codium -a . -g" 	
 	
 	#send a command to background without output
@@ -23,6 +25,13 @@
 source ~/dotfiles/zsh/plugins/fixls.zsh
 
 #Functions
+	#mkdir and cd
+	mkcdir ()
+	{
+	    mkdir -p -- "$1" &&
+	    cd -P -- "$1"
+	}
+
 	# Loop a command and show the output in vim
 	loop() {
 		echo ":cq to quit\n" > /tmp/log/output 
@@ -81,6 +90,12 @@ if [[ "${terminfo[kcud1]}" != "" ]]; then
 	zle -N down-line-or-beginning-search
 	bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
 fi
+
+# init fasd (analyzes frequently used directories)
+eval "$(fasd --init auto)"
+
+# init xmodmap (swapped Esc and CapsLock in ~/.xmodmap
+xmodmap ~/.xmodmap
 
 source ~/dotfiles/zsh/prompt.sh
 export PATH=$PATH:$HOME/dotfiles/utils
