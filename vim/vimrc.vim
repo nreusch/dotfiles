@@ -1,98 +1,80 @@
-" General Vim settings
-	syntax on
-	let mapleader=","
-	set autoindent
-	set tabstop=4
-	set shiftwidth=4
-	set dir=/tmp/
-	set relativenumber 
-	set number
+" Comments in Vimscript start with a `"`.
 
-	autocmd Filetype html setlocal sw=2 expandtab
-	autocmd Filetype javascript setlocal sw=4 expandtab
+" If you open this file in Vim, it'll be syntax highlighted for you.
 
-	set cursorline
-	hi Cursor ctermfg=White ctermbg=Yellow cterm=bold guifg=white guibg=yellow gui=bold
+" Vim is based on Vi. Setting `nocompatible` switches from the default
+" Vi-compatibility mode and enables useful Vim functionality. This
+" configuration option turns out not to be necessary for the file named
+" '~/.vimrc', because Vim automatically enters nocompatible mode if that file
+" is present. But we're including it here just in case this config file is
+" loaded some other way (e.g. saved as `foo`, and then Vim started with
+" `vim -u foo`).
+set nocompatible
 
-	set hlsearch
-	nnoremap <C-l> :nohl<CR><C-l>:echo "Search Cleared"<CR>
-	nnoremap <C-c> :set norelativenumber<CR>:set nonumber<CR>:echo "Line numbers turned off."<CR>
-	nnoremap <C-n> :set relativenumber<CR>:set number<CR>:echo "Line numbers turned on."<CR>
+" Turn on syntax highlighting.
+syntax on
 
-	nnoremap n nzzzv
-	nnoremap N Nzzzv
+" Disable the default Vim startup message.
+set shortmess+=I
 
-	nnoremap H 0
-	nnoremap L $
-	nnoremap J G
-	nnoremap K gg
+" Show line numbers.
+set number
 
-	map <tab> %
+" This enables relative line numbering mode. With both number and
+" relativenumber enabled, the current line shows the true line number, while
+" all other lines (above and below) are numbered relative to the current line.
+" This is useful because you can tell, at a glance, what count is needed to
+" jump up or down to a particular line, by {count}k to go up or {count}j to go
+" down.
+set relativenumber
 
-	set backspace=indent,eol,start
+" Always show the status line at the bottom, even if you only have one window open.
+set laststatus=2
 
-	nnoremap <Space> za
-	nnoremap <leader>z zMzvzz
+" The backspace key has slightly unintuitive behavior by default. For example,
+" by default, you can't backspace before the insertion point set with 'i'.
+" This configuration makes backspace behave more reasonably, in that you can
+" backspace over anything.
+set backspace=indent,eol,start
 
-	nnoremap vv 0v$
+" By default, Vim doesn't let you hide a buffer (i.e. have a buffer that isn't
+" shown in any window) that has unsaved changes. This is to prevent you from "
+" forgetting about unsaved changes and then quitting e.g. via `:qa!`. We find
+" hidden buffers helpful enough to disable this protection. See `:help hidden`
+" for more information on this.
+set hidden
 
-	set listchars=tab:\|\ 
-	nnoremap <leader><tab> :set list!<cr>
-	set pastetoggle=<F2>
-	set mouse=a
-	set incsearch
+" This setting makes search case-insensitive when all characters in the string
+" being searched are lowercase. However, the search becomes case-sensitive if
+" it contains any capital letters. This makes searching more convenient.
+set ignorecase
+set smartcase
 
-" Language Specific
-	" Tabs
-		so ~/dotfiles/vim/sleuth.vim
+" Enable searching as you type, rather than waiting till you press enter.
+set incsearch
 
-	" Typescript
-		autocmd BufNewFile,BufRead *.ts set syntax=javascript
-		autocmd BufNewFile,BufRead *.tsx set syntax=javascript
+" Unbind some useless/annoying default key bindings.
+nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
 
-	" Markup
-		inoremap <leader>< <esc>I<<esc>A><esc>yypa/<esc>O<tab>
+" Disable audible bell because it's annoying.
+set noerrorbells visualbell t_vb=
 
+" Enable mouse support. You should avoid relying on this too much, but it can
+" sometimes be convenient.
+set mouse+=a
 
-" File and Window Management 
-	inoremap <leader>w <Esc>:w<CR>
-	nnoremap <leader>w :w<CR>
-
-	inoremap <leader>q <ESC>:q<CR>
-	nnoremap <leader>q :q<CR>
-
-	inoremap <leader>x <ESC>:x<CR>
-	nnoremap <leader>x :x<CR>
-
-	nnoremap <leader>e :Ex<CR>
-	nnoremap <leader>t :tabnew<CR>:Ex<CR>
-	nnoremap <leader>v :vsplit<CR>:w<CR>:Ex<CR>
-	nnoremap <leader>s :split<CR>:w<CR>:Ex<CR>
-
-" Return to the same line you left off at
-	augroup line_return
-		au!
-		au BufReadPost *
-			\ if line("'\"") > 0 && line("'\"") <= line("$") |
-			\	execute 'normal! g`"zvzz' |
-			\ endif
-	augroup END
-
-" Auto load
-	" Triger `autoread` when files changes on disk
-	" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
-	" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
-	autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-	set autoread 
-	" Notification after file change
-	" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
-	autocmd FileChangedShellPost *
-	  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-
-" Future stuff
-	"Swap line
-	"Insert blank below and above
-
-" Fix for: https://github.com/fatih/vim-go/issues/1509
-
-filetype plugin indent on
+" Try to prevent bad habits like using the arrow keys for movement. This is
+" not the only possible bad habit. For example, holding down the h/j/k/l keys
+" for movement, rather than using more efficient movement commands, is also a
+" bad habit. The former is enforceable through a .vimrc, while we don't know
+" how to prevent the latter.
+" Do this in normal mode...
+nnoremap <Left>  :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up>    :echoe "Use k"<CR>
+nnoremap <Down>  :echoe "Use j"<CR>
+" ...and in insert mode
+inoremap <Left>  <ESC>:echoe "Use h"<CR>
+inoremap <Right> <ESC>:echoe "Use l"<CR>
+inoremap <Up>    <ESC>:echoe "Use k"<CR>
+inoremap <Down>  <ESC>:echoe "Use j"<CR>
