@@ -94,8 +94,8 @@ fi
 # init fasd (analyzes frequently used directories)
 eval "$(fasd --init auto)"
 
-# init xmodmap (swapped Esc and CapsLock in ~/.xmodmap
-xmodmap ~/.xmodmap
+# swapped Esc and CapsLock 
+setxkbmap -option caps:swapescape
 
 source ~/dotfiles/zsh/prompt.sh
 export PATH=$PATH:$HOME/dotfiles/utils
