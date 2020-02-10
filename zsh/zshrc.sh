@@ -14,6 +14,10 @@
 
 	alias codium="codium -a . -g" 	
 	
+	# view file with default application
+	alias view="xdg-open"
+	alias open="view"
+	
 	#send a command to background without output
 	alias -g bgr="> /dev/null 2>&1 &"
 	# This is currently causing problems (fails when you run it anywhere that isn't a git project's root directory)
