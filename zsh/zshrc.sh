@@ -36,6 +36,15 @@ source ~/dotfiles/zsh/plugins/fixls.zsh
 	    cd -P -- "$1"
 	}
 
+	#init a new repo and create on github (requires hub)
+	initgit ()
+	{
+	    git init
+	    git add .
+	    git commit -m "initial commit"
+	    hub create
+	    git push -u origin HEAD
+	}
 	# Loop a command and show the output in vim
 	loop() {
 		echo ":cq to quit\n" > /tmp/log/output 
@@ -102,4 +111,4 @@ eval "$(fasd --init auto)"
 setxkbmap -option caps:swapescape
 
 source ~/dotfiles/zsh/prompt.sh
-export PATH=$PATH:$HOME/dotfiles/utils
+export PATH=$PATH:$HOME/dotfiles/utils:$HOME/danstar/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux/gcc-arm-none-eabi-9-2019-q4-major/bin:$HOME/tools/ghidra
