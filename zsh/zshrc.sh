@@ -1,4 +1,4 @@
-export OWNBOX="116.203.199.163"
+export OWNBOX="65.21.242.166"
 
 # Vars
 	HISTFILE=~/.zsh_history
