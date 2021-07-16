@@ -1,3 +1,5 @@
+export OWNBOX="116.203.199.163"
+
 # Vars
 	HISTFILE=~/.zsh_history
 	SAVEHIST=1000 
@@ -18,11 +20,12 @@
 	alias view="xdg-open"
 	alias open="view"
 	
+	export SERVER="116.203.199.163"
 	#send a command to background without output
 	alias -g bgr="> /dev/null 2>&1 &"
 	# This is currently causing problems (fails when you run it anywhere that isn't a git project's root directory)
 	# alias vs="v `git status --porcelain | sed -ne 's/^ M //p'`"
-
+	
 # Settings
 	export VISUAL=vim
 
@@ -108,7 +111,7 @@ fi
 eval "$(fasd --init auto)"
 
 # swapped Esc and CapsLock 
-setxkbmap -option caps:swapescape
+#setxkbmap -option caps:swapescape
 
 source ~/dotfiles/zsh/prompt.sh
-export PATH=$PATH:$HOME/dotfiles/utils:$HOME/danstar/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux/gcc-arm-none-eabi-9-2019-q4-major/bin:$HOME/tools/ghidra
+export PATH=$PATH:$HOME/.local/bin:$HOME/dotfiles/utils:$HOME/danstar/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux/gcc-arm-none-eabi-9-2019-q4-major/bin:$HOME/tools/ghidra
